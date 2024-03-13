@@ -3,7 +3,6 @@
 
 {% block content %}
 
-    <!-- HTML разметка -->
     <div id="question-container">
         <h3 id="question"></h3>
             <form id="answer-form">
@@ -15,23 +14,22 @@
         <h2>Тест завершен!</h2>
     </div>
 
-    <!-- JavaScript код -->
+
     <script>
-        // Устанавливаем индекс текущего вопроса в начало
         var currentQuestionIndex = 0;
         var test_data = {{ test_data|safe }};
 
-        // Функция для отображения следующего вопроса
         function showQuestion() {
             var currentQuestion = test_data[currentQuestionIndex];
             document.getElementById('question').textContent = currentQuestion.question;
 
             var answersContainer = document.getElementById('answer-form');
+            answersContainer.innerHTML = '';
 
             var submitButton = document.createElement('button');
             submitButton.type = 'submit';
             submitButton.textContent = 'Отправить';
-            // Создаем элементы ответов
+
             currentQuestion.answers.forEach(function(answer, index) {
                 var input = document.createElement('input');
                 input.type = 'radio';
@@ -48,33 +46,25 @@
                 answersContainer.appendChild(submitButton);
             });
         }
-
-        // Функция для перехода к следующему вопросу
         function nextQuestion() {
             currentQuestionIndex++;
             if (currentQuestionIndex < test_data.length) {
-                // Показываем следующий вопрос
                 showQuestion();
-                // Добавляем класс с анимацией
                 document.getElementById('question-container').classList.add('question-animation');
-                // Через время, достаточное для завершения анимации, удаляем класс анимации
                 setTimeout(function() {
                     document.getElementById('question-container').classList.remove('question-animation');
-                }, 500); // 500ms - время анимации
+                }, 500);
             } else {
-                // Скрываем контейнер с вопросом и показываем сообщение о завершении теста
                 document.getElementById('question-container').style.display = 'none';
                 document.getElementById('completion-message').style.display = 'block';
             }
         }
 
-        // Обработчик отправки формы
         document.getElementById('answer-form').addEventListener('submit', function(event) {
             event.preventDefault();
             nextQuestion();
         });
 
-        // Показываем первый вопрос при загрузке страницы
         showQuestion();
     </script>
 

@@ -2,15 +2,16 @@ import requests
 
 
 def get_quiz(data, creator_id, quiz_id):
-    api_url = f'http://127.0.0.1:8000/{creator_id}/getquiz/{quiz_id}/'
-    response = requests.post(api_url, data=data)
-    if response.status_code == 200:
-        # Получаем данные теста из ответа API
+    try:
+        api_url = f'http://127.0.0.1:8000/{creator_id}/getquiz/{quiz_id}/'
+        response = requests.post(api_url, data=data)
+        response.raise_for_status()
         test_data = response.json()
         quiz = parse_quiz(test_data)
-        #print(quiz)
-        # Отображаем тест на странице
         return quiz
+    except requests.RequestException as e:
+        print(f"Ошибка при обращении к API: {e}")
+        return None
 
 
 def parse_quiz(json_data):

@@ -1,8 +1,8 @@
 .quiz-container {
-    position: absolute; /* Абсолютное позиционирование */
-    top: 150px; /* Ниже навбара на 100px */
-    left: 50%; /* Располагаем контейнер по горизонтали в середине страницы */
-    transform: translateX(-50%); /* Центрируем контейнер относительно ширины страницы */
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 @keyframes moveQuestion {
@@ -12,69 +12,66 @@
 
 #question-container {
     max-width: 600px;
-    margin: 50px auto; /* Установите отступы сверху и снизу 50px, а по горизонтали автоматически выравнивайте контейнер */
+    margin: 50px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative; /* Устанавливаем позиционирование как относительное, чтобы использовать смещение */
-    right: 150px; /* Смещаем контейнер влево на 50px */
+    position: relative;
+    right: 150px;
 }
 
 #completion-message {
     max-width: 600px;
-    margin: 50px auto; /* Установите отступы сверху и снизу 50px, а по горизонтали автоматически выравнивайте контейнер */
+    margin: 50px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative; /* Устанавливаем позиционирование как относительное, чтобы использовать смещение */
+    position: relative;
     right: 150px;
 }
 .question-animation {
     animation: moveQuestion 0.5s ease-out forwards;
 }
 
-/* Общие стили для вопросов и ответов */
+
 .question {
-    margin-bottom: 15px; /* Добавляем отступ между вопросами */
+    margin-bottom: 15px;
 }
 
-/* Стили для кнопки "Проверить ответы" */
 button[type="submit"] {
-    background-color: #007bff; /* Цвет фона кнопки */
-    color: #fff; /* Цвет текста кнопки */
-    padding: 10px 20px; /* Внутренние отступы кнопки */
-    border: none; /* Убираем границу */
-    border-radius: 5px; /* Закругляем углы кнопки */
-    cursor: pointer; /* Курсор при наведении */
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3; /* Изменяем цвет фона при наведении */
+    background-color: #0056b3;
 }
 
-
-/* Форма для пользователя*/
 #my-form {
     margin-top: 20px;
     font-family: Arial, sans-serif;
-    text-align: center; /* Центрирование содержимого формы */
+    text-align: center;
 }
 
 #my-form label {
     font-weight: bold;
-    margin-bottom: 5px; /* Уменьшаем расстояние между метками и полями */
+    margin-bottom: 5px;
 }
 
 #my-form input[type="text"],
 #my-form input[type="email"],
 #my-form input[type="tel"],
 #my-form input[type="date"] {
-    width: 300px; /* Ширина полей */
+    width: 300px;
     padding: 10px;
-    margin: 5px auto; /* Центрирование и уменьшение расстояния между полями */
-    display: block; /* Размещение полей на разных строках */
+    margin: 5px auto;
+    display: block;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
@@ -87,7 +84,7 @@ button[type="submit"]:hover {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px; /* Увеличиваем расстояние между полем даты и кнопкой */
+    margin-top: 10px;
 }
 
 #my-form button[type="submit"]:hover {
