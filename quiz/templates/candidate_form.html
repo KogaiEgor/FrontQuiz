@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <body>
+        <form id="my-form" method="POST">
+            {% csrf_token %}
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="phone">Номер телефона:</label>
+            <input type="tel" id="phone" name="phone" required>
+            <label for="phone">Дата рождения:</label>
+            <input type="date" id="dob" name="dob" required>
+            <button type="submit">Отправить</button>
+        </form>
+    </body>
+{% endblock %}
