@@ -24,5 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home', views.home_page, name='home'),
     path('<int:creator_id>/quiz/<int:quiz>/', views.quiz_page, name='quiz'),
+    path('<int:creator_id>/save_results/<int:quiz>/', views.quiz_results, name='results')
 ]
 

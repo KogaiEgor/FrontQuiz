@@ -6,7 +6,7 @@
     <div id="question-container">
         <h3 id="question"></h3>
             <form id="answer-form">
-
+                {% csrf_token %}
             </form>
     </div>
 
@@ -18,6 +18,7 @@
     <script>
         var currentQuestionIndex = 0;
         var test_data = {{ test_data|safe }};
+        var userAnswers = [];
 
         function showQuestion() {
             var currentQuestion = test_data[currentQuestionIndex];
@@ -26,14 +27,11 @@
             var answersContainer = document.getElementById('answer-form');
             answersContainer.innerHTML = '';
 
-            var submitButton = document.createElement('button');
-            submitButton.type = 'submit';
-            submitButton.textContent = 'Отправить';
-
             currentQuestion.answers.forEach(function(answer, index) {
                 var input = document.createElement('input');
                 input.type = 'radio';
                 input.name = 'answer';
+                input.value = index;
                 input.id = 'answer' + (index + 1);
 
                 var label = document.createElement('label');
@@ -43,10 +41,37 @@
                 answersContainer.appendChild(input);
                 answersContainer.appendChild(label);
                 answersContainer.appendChild(document.createElement('br'));
-                answersContainer.appendChild(submitButton);
             });
+
+            var submitButton = document.createElement('button');
+            submitButton.type = 'submit';
+            submitButton.textContent = 'Отправить';
+            answersContainer.appendChild(submitButton);
         }
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+
+
         function nextQuestion() {
+            var selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            if (selectedAnswer) {
+                userAnswers.push(parseInt(selectedAnswer.value));
+            }
+
             currentQuestionIndex++;
             if (currentQuestionIndex < test_data.length) {
                 showQuestion();
@@ -55,9 +80,32 @@
                     document.getElementById('question-container').classList.remove('question-animation');
                 }, 500);
             } else {
-                document.getElementById('question-container').style.display = 'none';
-                document.getElementById('completion-message').style.display = 'block';
+                sendUserAnswers(userAnswers);
             }
+        }
+
+        function sendUserAnswers(answers) {
+            // Отправляем ответы пользователя на сервер с помощью AJAX
+            console.log('/{{ creator_id }}/save_results/{{ quiz }}/')
+            fetch('/{{ creator_id }}/save_results/{{ quiz }}/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')  // Получаем CSRF-токен для защиты от CSRF-атак
+                },
+                body: JSON.stringify({ answers: answers }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Ответы успешно отправлены!');
+                    window.location.href = '/{{ creator_id }}/save_results/{{ quiz }}/';
+                } else {
+                    throw new Error('Ошибка при отправке ответов');
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error.message);
+            });
         }
 
         document.getElementById('answer-form').addEventListener('submit', function(event) {

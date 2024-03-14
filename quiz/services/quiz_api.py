@@ -29,3 +29,6 @@ def parse_quiz(json_data):
         })
 
     return parsed_quiz
+
+def send_results(data, creator_id, quiz_id):
+    return None
