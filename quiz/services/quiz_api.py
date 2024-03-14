@@ -31,4 +31,12 @@ def parse_quiz(json_data):
     return parsed_quiz
 
 def send_results(data, creator_id, quiz_id):
-    return None
+    try:
+        api_url = f'http://127.0.0.1:8000/{creator_id}/getquiz/{quiz_id}/getresult/'
+        response = requests.post(api_url, data=data)
+        response.raise_for_status()
+        return True
+    except requests.RequestException as e:
+        print(f"Ошибка при обращении к API: {e}")
+        return False
+

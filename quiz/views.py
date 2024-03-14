@@ -36,4 +36,4 @@ def quiz_results(request, creator_id, quiz):
 
         return render(request, 'test_finished.html', context)
 
-    return render(request, 'candidate_form.html')
+    return render(request, 'test_finished.html')
